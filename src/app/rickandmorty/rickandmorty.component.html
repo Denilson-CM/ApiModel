@@ -1,0 +1,121 @@
+<div class="row mt-5">
+    <div class="col-md-12">
+        First Name
+        <input class="form-control" [(ngModel)]="filterData" type="text" name="">
+    </div>
+</div>
+
+<section class="our-webcoderskull padding-lg mt-2">
+    <div class="container">
+        <div class="row heading heading-icon">
+            <h2 class="title">RICK AND MORTY</h2>
+        </div>
+        <ul class="row">
+            <!-- <li class="col-12 col-md-6 col-lg-3 " *ngFor="let item of rickandmorty | paginate: { itemsPerPage: 2, currentPage: pageActual }">-->
+            <!-- <li class="col-12 col-md-6 col-lg-3 " *ngFor="let item of respose?.results | rickandmortyFilter : filterData"> -->
+            <li class="col-12 col-md-6 col-lg-3 " *ngFor="let item of respose?.results | rickandmortyFilter : filterData | paginate: { itemsPerPage: 4, currentPage: pageActual }">
+            
+                <div class="cnt-block equal-hight" style="height: 340px;">
+                    
+                    <h6 *ngIf="item.status === 'Alive';else loadingD;">
+                        <td>{{item.id}} - <span class="green">A</span></td>
+                    </h6>
+
+                    <ng-template #loadingD>
+                        <h6 *ngIf="item.status === 'Dead';else loadingK;">
+                                <td><td>{{item.id}} - <span class="red">D</span></td>
+                        </h6>
+                    </ng-template>
+
+                    <ng-template #loadingK>
+                        <td>{{item.id}} - <span class="yellow">U</span></td>
+                    </ng-template>
+                    
+                    <figure><img class="img-thumbnail imgpersonaje" src="{{'https://rickandmortyapi.com/api/character/avatar/' + item.id + '.jpeg'}}" class="img-responsive" alt=""></figure>
+                    
+                    <h6>
+                        <td>{{item.name}}</td>
+                    </h6>
+                       
+                    <h6>
+                        <td>{{item.species}} - {{item.status}}</td>
+                    </h6>
+                    
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" [attr.data-bs-target]="'#Modal' + item.id">
+                        Ver más...
+                    </button>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" [attr.id]="'Modal' + item.id" tabindex="-1"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">{{item.name}}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <figure><img class="img-thumbnail imgpersonaje" src="{{'https://rickandmortyapi.com/api/character/avatar/' + item.id + '.jpeg'}}" class="img-responsive" alt=""></figure>
+                    
+                                <h6>
+                                    <td>Origin: {{item.origin?.name}}</td>
+                                </h6>
+                                <h6>
+                                    <td>Location: {{item.location?.name}}</td>
+                                </h6>
+                                <h6>
+                                    <td>Type: {{item.type}}</td>
+                                </h6>
+                                <h6>
+                                    <td>Gender: {{item.gender}}</td>
+                                </h6>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <pagination-controls class="pagination" (pageChange)="pageActual = $event" ></pagination-controls>
+</section>
+
+
+<!-- ------------------------------------------------- -->
+
+<!-- <div class="row justify-content-center mt-5">
+    <section class="col-md-8">
+        <table class="table">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of respose?.results">
+                    <td>{{item.id}}</td>
+                    <td>{{item.name}}
+                        <br/>
+                        {{item.species}} - {{item.status}}
+                    </td>
+                    <td>
+                        <img class="img-thumbnail imgpersonaje" src="{{'https://rickandmortyapi.com/api/character/avatar/' + item.id + '.jpeg'}}">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</div>
+
+
+<div *ngIf="item.id === 20; else ">
+    gf
+</div> -->
